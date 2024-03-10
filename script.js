@@ -1,3 +1,11 @@
+function displayFileName() {
+    const fileInput = document.getElementById("fileInput");
+    const fileNameDisplay = document.getElementById("fileName");
+    const fileName = fileInput.files[0].name;
+    fileNameDisplay.textContent = fileName;
+  }
+  
+
 document.getElementById('uploadForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const formData = new FormData();

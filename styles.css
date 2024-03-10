@@ -1,12 +1,75 @@
 body {
     font-family: Arial, sans-serif;
-}
-
-form {
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    margin: 20px auto;
+    margin-top: 150px;
+    width: 80%;
+    max-width: 400px;
+    background-color: #D3E6CB;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
     margin-bottom: 20px;
-}
-
-#result {
+  }
+  
+  .file-label {
+    display: block;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .file-label span {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .file-name {
+    text-align: center;
+    margin-top: 10px;
+    color: #666;
+  }
+  
+  .upload-btn {
+    display: block;
+    width: 100%;
+    background-color: #00796B;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .upload-btn:hover {
+    background-color: #005B4F;
+  }
+
+  .result{
+    margin: 10px 10px;
+    align-content: center;
+  }
+
+  p {
+    color: black;
     font-weight: bold;
-}
+    text-align: center;
+  }
+  
