@@ -1,11 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response  # Add make_response import
 from keras.models import load_model
 import numpy as np
 import cv2
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/predict": {"origins": "http://127.0.0.1:5000"}})
+CORS(app, resources={r"/predict": {"origins": "http://127.0.0.1:3000"}})
 model = load_model('tea_sickness_model.keras')
 
 @app.route('/predict', methods=['POST'])
@@ -21,7 +21,8 @@ def predict():
     disease_labels = ['Algal leaf', 'Healthy', 'Bird eye spot', 'Gray light', 'Brown blight', 'Anthracnose', 'Red leaf spot', 'White spot']
     predicted_disease = disease_labels[np.argmax(prediction)]
 
-    return jsonify({'prediction': predicted_disease})
+    response = make_response(jsonify({'prediction': predicted_disease}))
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True)
