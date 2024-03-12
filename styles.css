@@ -149,6 +149,7 @@ html {
 }
 
 body {
+<<<<<<< HEAD
   background-color: var(--white-1);
   color: var(--gray-web);
   font-size: 1.6rem;
@@ -748,6 +749,55 @@ textarea.input-field {
 .back-top-btn:is(:hover, :focus) { opacity: 0.9; }
 
 .upload-btn {
+=======
+    font-family: Arial, sans-serif;
+    background-color: #D3E6CB;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    margin: 20px auto;
+    margin-top: 200px;
+    width: 80%;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .file-label {
+    display: block;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .file-label span {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .file-name {
+    text-align: center;
+    margin-top: 10px;
+    color: #666;
+  }
+  
+  .upload-btn {
+>>>>>>> 4c93a01ba89b8678f33cf88cd5b6ce1de7e4c8e7
     display: block;
     width: 100%;
     background-color: #00796B;
@@ -803,6 +853,7 @@ textarea.input-field {
     align-items: center;
     gap: 10px;
   }
+<<<<<<< HEAD
 
 
 
@@ -1137,3 +1188,6 @@ textarea.input-field {
 
 
 
+=======
+  
+>>>>>>> 4c93a01ba89b8678f33cf88cd5b6ce1de7e4c8e7
