@@ -134,7 +134,10 @@ textarea {
 }
 
 input,
-textarea { width: 100%; }
+textarea { 
+  width: 100%;
+  margin-left: 50px;
+}
 
 button { cursor: pointer; }
 
@@ -265,7 +268,7 @@ body {
 
 .header > .container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -379,6 +382,7 @@ body {
   text-align: center;
   box-shadow: var(--shadow-1);
   transition: var(--transition-2);
+  min-height: 400px;
 }
 
 .service-card:is(:hover, :focus-within) { transform: translateY(-10px); }
@@ -1136,4 +1140,4 @@ textarea.input-field {
   .service-card .h3 { --fs-3: 2.5rem; }
 
 
-
+}
