@@ -771,7 +771,6 @@ textarea.input-field {
   
   label{
     display: inline-block;
-    text-transform: uppercase;
     color: #fff;
     background-color: #c0392b;
     padding: 10px 10px;
