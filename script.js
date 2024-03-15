@@ -1,29 +1,119 @@
-//where ilyas will work with for the functionality of 
-//files and sending results to where neccesary
 function displayFileName() {
-    const fileInput = document.getElementById("fileInput");
-    const fileNameDisplay = document.getElementById("fileName");
-    const fileName = fileInput.files[0].name;
-    fileNameDisplay.textContent = fileName;
-  }
-  
+  clearResult();
+}
+
+function clearResult() {
+  document.querySelector('.result p').innerText = "";
+}
 
 document.getElementById('uploadForm').addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('image', document.getElementById('imageInput').files[0]);
+  e.preventDefault();
+  const formData = new FormData();
+  const files = document.getElementById('fileInput').files;
 
-    console.log('Sending request to:', 'http://127.0.0.1:5000/predict');
-    const response = await fetch('http://127.0.0.1:5000/predict', {
+  for (let i = 0; i < files.length; i++) {
+    formData.append('image', files[i]);
+  }
+
+  console.log('Sending request to:', 'http://127.0.0.1:5000/predict');
+  const response = await fetch('http://127.0.0.1:5000/predict', {
     method: 'POST',
     body: formData
-});
-    console.log('Response:', response);
-    const data = await response.json();
-    console.log("Data from model", data)
+  });
 
-    document.getElementById('result').innerText = `Predicted Disease: ${data.prediction}`;
+  console.log('Response:', response);
+  const data = await response.json();
+  console.log("Data from model", data);
+
+  const resultContainer = document.querySelector('.result p');
+  const recommendationsContainer = document.querySelector('.recommendations p');
+  resultContainer.innerHTML = ''; // Clear previous results
+  recommendationsContainer.innerText = ''; // Clear previous recommendations
+
+  if (data && data.result) {
+    if (files.length > 1 && data.diseases.every(disease => disease === 'Healthy')) {
+    const allHealthy = data.diseases.every(disease => disease === 'Healthy');
+    if (allHealthy) {
+      resultContainer.textContent = 'No diseases found in the images you have uploaded. You\'re all clear!';
+      recommendationsContainer.textContent = "Since your tea is healthy, no recommendations are required. Regularly upload photos to track plant progress.";
+    }
+    } else if (data.disease === 'Healthy') {
+      if (files.length > 1) {
+        resultContainer.textContent = 'No diseases found in the images you have uploaded. You\'re all clear!';
+      } else {
+        resultContainer.textContent = 'No disease found in the tea leaf image you have uploaded. You\'re all clear!';
+      }
+      recommendationsContainer.textContent = "Since your tea is healthy, no recommendations are required. Regularly upload photos to track plant progress.";
+    } else if (data.result === 'Disease Found' || (data.result === 'Diseases Found' && data.diseases.length > 0)) {
+      // const pTagHeader = document.createElement('p');
+      // pTagHeader.textContent = `${data.result}`;
+      // resultContainer.appendChild(pTagHeader);
+
+      // const pTagDisease = document.createElement('p');
+      // pTagDisease.textContent = data.disease;
+      // resultContainer.appendChild(pTagDisease);
+      const uniqueDiseases = [...new Set(data.diseases)]; // Remove duplicates using Set
+      
+      if (uniqueDiseases.length > 0) {
+        const diseasesText = uniqueDiseases.join(', ');
+        const pTagDisease = document.createElement('p');
+        pTagDisease.textContent = `Your plants are infected with ${diseasesText}.`;
+        resultContainer.appendChild(pTagDisease);
+      } else {
+        const pTagHeader = document.createElement('p');
+        pTagHeader.textContent = data.result === 'Disease Found' ? `${data.result}` : `${data.result}:`;
+        resultContainer.appendChild(pTagHeader);
+
+        const pTagNoDisease = document.createElement('p');
+        pTagNoDisease.textContent = 'No specific diseases detected.';
+        resultContainer.appendChild(pTagNoDisease);
+      }
+
+      // Trigger the prompt for spraying history only if diseases are found
+      setTimeout(() => {
+        handleRecommendations(recommendationsContainer);
+      }, 500); // 500 milliseconds = 0.5 seconds
+
+    } else if (data.result === 'Diseases Found') {
+      const pTagHeader = document.createElement('p');
+      pTagHeader.textContent = `${data.result}`;
+      resultContainer.appendChild(pTagHeader);
+
+      data.diseases.forEach(disease => {
+        const pTag = document.createElement('p');
+        pTag.textContent = disease;
+        resultContainer.appendChild(pTag);
+      });
+
+      // Trigger the prompt for spraying history only if diseases are found
+      setTimeout(() => {
+        handleRecommendations(recommendationsContainer);
+      }, 500); // 500 milliseconds = 0.5 seconds
+    }
+  } else {
+    alert('Error in getting predictions. Please try again.');
+  }
 });
+
+// Function to handle recommendations based on spraying history
+function handleRecommendations(container) {
+  const sprayingMonths = prompt("When was the tea last sprayed with agrochemicals? (Enter number of months)");
+
+  // Recommendations logic based on spraying history
+  if (isNaN(sprayingMonths) || sprayingMonths <= 0) {
+    alert("Please input a valid number of months for spraying history.");
+  } else if (sprayingMonths > 12) {
+    alert("Please input the spraying time in months or a suitable statement.");
+  } else if (sprayingMonths === 1) {
+    container.textContent = "Consider changing your agrochemicals.";
+  } else if (sprayingMonths > 1 && sprayingMonths <= 5) {
+    container.textContent = "Consider planting resistant varieties and removing infected parts.";
+  } else {
+    container.textContent = "Consider re-spraying agrochemicals and using biological control by introducing beneficial organisms to the plants.";
+  }
+}
+
+
 
 //end Ilyas' coding in javascript
 
