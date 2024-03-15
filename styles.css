@@ -764,38 +764,6 @@ textarea.input-field {
     transition: background-color 0.3s ease;
   }
 
-  input[type="file"]{
-    display: none;
-    box-sizing: border-box;
-  }
-  
-  label{
-    display: inline-block;
-    color: #fff;
-    background-color: #c0392b;
-    padding: 10px 10px;
-    font-family: 10px;
-    letter-spacing: 1px;
-    user-select: none;
-    cursor: pointer;
-    box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35);
-    border-radius: 2px;
-    box-sizing: border-box;
-  }
-  
-  label i{
-    font-size: 10px;
-    margin-right: 2px;
-    box-sizing: border-box;
-  }
-  
-  label:active{
-    transform: scale(0.9);
-  }
-  
-
-  
-
 
 
 
