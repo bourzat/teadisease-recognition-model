@@ -6,6 +6,14 @@ function clearResult() {
   document.querySelector('.result p').innerText = "";
 }
 
+
+
+// Function to check if array contains duplicates
+function hasDuplicates(array) {
+  return new Set(array).size !== array.length;
+}
+
+
 document.getElementById('uploadForm').addEventListener('submit', async function(e) {
   e.preventDefault();
   const formData = new FormData();
@@ -44,7 +52,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
         resultContainer.textContent = 'No disease found in the tea leaf image you have uploaded. You\'re all clear!';
       }
       recommendationsContainer.textContent = "Since your tea is healthy, no recommendations are required. Regularly upload photos to track plant progress.";
-    } else if (data.result === 'Disease Found' || (data.result === 'Diseases Found' && data.diseases.length > 0)) {
+    } else if (data.result === 'Disease Found' || (data.result === 'Diseases Found' && hasDuplicates(data.diseases))) {
       // const pTagHeader = document.createElement('p');
       // pTagHeader.textContent = `${data.result}`;
       // resultContainer.appendChild(pTagHeader);
@@ -53,7 +61,7 @@ document.getElementById('uploadForm').addEventListener('submit', async function(
       // pTagDisease.textContent = data.disease;
       // resultContainer.appendChild(pTagDisease);
       const uniqueDiseases = [...new Set(data.diseases)]; // Remove duplicates using Set
-      
+
       if (uniqueDiseases.length > 0) {
         const diseasesText = uniqueDiseases.join(', ');
         const pTagDisease = document.createElement('p');
@@ -104,11 +112,11 @@ function handleRecommendations(container) {
     alert("Please input a valid number of months for spraying history.");
   } else if (sprayingMonths > 12) {
     alert("Please input the spraying time in months or a suitable statement.");
-  } else if (sprayingMonths === 1) {
-    container.textContent = "Consider changing your agrochemicals.";
+  } else if (0 < sprayingMonths <= 1) {
+    container.textContent = "Consider changing the type of agrochemicals you use.";
   } else if (sprayingMonths > 1 && sprayingMonths <= 5) {
     container.textContent = "Consider planting resistant varieties and removing infected parts.";
-  } else {
+  } else if (sprayingMonths > 5) {
     container.textContent = "Consider re-spraying agrochemicals and using biological control by introducing beneficial organisms to the plants.";
   }
 }
